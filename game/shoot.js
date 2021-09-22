@@ -51,6 +51,32 @@ function bullet_collision()
             player1.bullets.splice(i, 1);
             i--;
         }
+
+        if (player1.bullets[i])
+        {
+            console.log("Bullet x : " + player1.bullets[i].position.x);
+            console.log("Bullet y : " + player1.bullets[i].position.y);
+        }
+
+        console.log("Ennemy x : " + ennemy1.position.x);
+        console.log("Ennemy x : " + ennemy1.position.y);
+
+        ennemy1_hitbox_up = ennemy1.position.x - 50;
+        ennemy1_hitbox_left = ennemy1.position.y - 50;
+        ennemy1_hitbox_right = ennemy1.position.y + 50;
+        ennemy1_hitbox_down = ennemy1.position.x + 50;
+
+        if (player1.bullets[i])
+        {
+            if (Math.abs(player1.bullets[i].position.x) >= ennemy1_hitbox_up
+                && Math.abs(player1.bullets[i].position.x) <= ennemy1_hitbox_down
+                && Math.abs(player1.bullets[i].position.y) >= ennemy1_hitbox_left
+                && Math.abs(player1.bullets[i].position.y) <= ennemy1_hitbox_right)
+                {
+                    ennemy1.dead;
+                    console.log("U DEEEAD");
+                }
+        }
     }
 
 }
@@ -61,6 +87,8 @@ function player_collision()
     var x = player1.graphic.position.x + WIDTH / 2;
     var y = player1.graphic.position.y + HEIGHT / 2;
 
+    if ( x < 0 )
+        player1.graphic.position.x -= x;
     if ( x > WIDTH )
         player1.graphic.position.x -= x - WIDTH;
     if ( y < 0 )
@@ -83,10 +111,25 @@ function player_falling()
     for (var i = 0; i < length; i++) {
         element = noGround[i];
 
-        var tileX = (element[0]) | 0;
-        var tileY = (element[1]) | 0;
-        var mtileX = (element[0] + sizeOfTileX) | 0;
-        var mtileY = (element[1] + sizeOfTileY) | 0;
+        if (element)
+            var tileX = (element[0]) | 0;
+        else 
+            var tileX = 0;
+        
+        if (element)
+            var tileY = (element[1]) | 0;
+        else 
+            var tileY = 0;
+        
+        if (element)
+            var mtileX = (element[0] + sizeOfTileX) | 0;
+        else 
+            var mtileX = 0;
+        
+        if (element)
+            var mtileY = (element[1] + sizeOfTileY) | 0;
+        else 
+            var mtileY = 0;
 
         if ((x > tileX)
             && (x < mtileX)
